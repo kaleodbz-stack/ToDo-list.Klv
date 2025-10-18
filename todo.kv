@@ -1,0 +1,60 @@
+#:kivy 2.3.0
+
+<CheckBoxLabel>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: "40dp"
+    padding: 10
+    spacing: 10
+
+    canvas.before:
+        Color:
+            rgba: 0.9, 0.9, 0.9, 1
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        
+    CheckBox:
+        active: root.completed
+        on_active: app.root.toggle_completed(root.text)
+        color: 0, 0, 0, 1
+
+    Label:
+        text: root.text
+        color: 0, 0, 0, 1
+
+<ToDoRoot>: 
+    orientation: "vertical"
+    padding: 10
+    spacing: 10
+
+    Label:
+        text: "To Do"
+        font_size: "45sp"
+        color: 0.37, 0.81, 0.36, 1
+        size_hint_y: None
+        height: "60dp"
+        text_size: self.width, None
+        halign: "center"
+        
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        spacing: 10
+        TextInput:
+            id: task_input
+            hint_text: "Enter the task"
+        Button:
+            text: "Add"
+            on_release: root.add_task(task_input.text)
+
+    RecycleView:
+        id: rv
+        viewclass: "CheckBoxLabel"
+        RecycleBoxLayout:
+            default_size: None, dp(48)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
